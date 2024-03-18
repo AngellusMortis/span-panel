@@ -14,7 +14,7 @@ if [[ rc -eq 1 ]]; then
     exit 1
 fi
 
-IN_DEVCONTAINER=$([[ -f /.dockerenv && -d /workspaces/span_panel ]] && echo "true" || echo "false")
+IN_DEVCONTAINER=$([[ -f /.dockerenv && -d /workspaces/span-panel ]] && echo "true" || echo "false")
 if [[ $IN_DEVCONTAINER == "true" ]]; then
     echo "Inside of devcontainer"
 fi
@@ -22,16 +22,16 @@ fi
 pushd "$ROOT_PATH" 2>&1 >/dev/null
 
 if [[ $IN_DEVCONTAINER == "true" ]]; then
-    sudo rm -rf /workspaces/span_panel/span_panel.egg-info
+    sudo rm -rf /workspaces/span-panel/span_panel.egg-info
 fi
 
-# echo "Updating requirements.txt..."
-# uv pip compile -v --upgrade --output-file=requirements.txt pyproject.toml
-# echo "Updating dev-requirements.txt..."
-# uv pip compile -v -c requirements.txt --upgrade --output-file=dev-requirements.txt pyproject.toml
+echo "Updating requirements.txt..."
+uv pip compile -v --upgrade --output-file=requirements.txt pyproject.toml
+echo "Updating dev-requirements.txt..."
+uv pip compile -v -c requirements.txt --upgrade --output-file=dev-requirements.txt pyproject.toml
 
-# if [[ $IN_DEVCONTAINER == "true" ]]; then
-#     echo "Upgrading dev container environment..."
-#     sudo uv pip install --system -r requirements.txt -r dev-requirements.txt
-# fi
+if [[ $IN_DEVCONTAINER == "true" ]]; then
+    echo "Upgrading dev container environment..."
+    sudo uv pip install --system -r requirements.txt -r dev-requirements.txt
+fi
 popd 2>&1 >/dev/null

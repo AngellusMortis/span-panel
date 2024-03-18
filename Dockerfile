@@ -77,7 +77,7 @@ RUN --mount=type=cache,mode=0755,id=apt-$TARGETPLATFORM,target=/var/lib/apt/list
     && chown app:app /home/app/.bashrc \
     && chmod +x /usr/local/bin/docker-fix
 
-ENV PYTHONPATH /workspaces/span-api/
-ENV PATH $PATH:/workspaces/span-api/.bin
+ENV PYTHONPATH /workspaces/span-panel/
+ENV PATH $PATH:/workspaces/span-panel/.bin
 USER app
 WORKDIR /workspaces/span-api/

@@ -61,7 +61,6 @@ dev = [
     "mypy",
     "pydocstyle",
     "pytest-asyncio",
-    "pytest-benchmark",
     "pytest-cov",
     "pytest-timeout>=1.2.1",
     "pytest-xdist[psutil]",
