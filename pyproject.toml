@@ -37,6 +37,7 @@ dependencies = [
     "aiohttp",
     "pydantic!=1.9.1,<2.0",
     "aenum",
+    "orjson"
 ]
 
 [project.urls]
@@ -128,6 +129,7 @@ max-complexity = 10
 "span_panel/client/**/*.py" = ["ALL"]
 "**/test_*.py" = ["FBT", "D", "SLF001", "PLR2004"]
 "tests/**/*.py" = ["FBT", "D", "SLF001", "PLR2004"]
+"tests/test_client/**/*.py" = ["ALL"]
 
 [tool.isort]
 profile = "black"
@@ -143,7 +145,7 @@ sections = ["FUTURE", "STDLIB", "THIRDPARTY", "FIRSTPARTY", "LOCALFOLDER"]
 python_version = "3.10"
 warn_unused_configs = true
 disable_error_code = "no-redef"
-exclude = ["dist", "/usr/local/lib", "codeql", "span_panel/client"]
+exclude = ["dist", "/usr/local/lib", "codeql", "span_panel/client", "tests/test_client"]
 disallow_any_generics = true
 disallow_subclassing_any = true
 disallow_untyped_calls = true
@@ -166,14 +168,6 @@ disallow_untyped_calls = false
 disallow_untyped_defs = false
 disallow_incomplete_defs = false
 check_untyped_defs = false
-
-[[tool.mypy.overrides]]
-module = "pytest_benchmark.fixture"
-ignore_missing_imports = true
-
-[[tool.mypy.overrides]]
-module = "av.*"
-ignore_missing_imports = true
 
 [[tool.mypy.overrides]]
 module = "async_timeout.*"

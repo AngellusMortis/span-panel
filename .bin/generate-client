@@ -1,5 +1,27 @@
 #!/bin/bash
 
-rm span_panel/client -rf
+BASE_DIR=$( realpath $( dirname "${BASH_SOURCE[0]}" )/../ )
+source "$BASE_DIR/.bin/lib/common.sh"
+setRoot
+
+pushd "$ROOT_PATH" 2>&1 >/dev/null
+
+rm ./span_panel/client -rf
+rm ./tests/test_client -rf
 
 openapi-generator-cli generate -g python-pydantic-v1 --additional-properties=library=asyncio,generateSourceCodeOnly=true,packageName=span_panel.client  -o . -i openapi.json
+
+
+mv ./span_panel/client/test ./tests/test_client
+
+# make generated tests asyncio friendly
+testDefaultApi="./tests/test_client/test_default_api.py"
+sed -i 's/TestDefaultApi(unittest.TestCase/TestDefaultApi(unittest.IsolatedAsyncioTestCase/' $testDefaultApi
+sed -i 's/def setUp/async def asyncSetUp/' $testDefaultApi
+
+# replace json with orjson
+find ./span_panel/client -name "*.py" | xargs sed -i 's/import json/import orjson as json/g'
+
+format-code
+
+popd 2>&1 >/dev/null

@@ -15,6 +15,6 @@ pushd "$ROOT_PATH" 2>&1 >/dev/null
 rm -rf .coverage*
 
 # TODO: add tests
-pytest --timeout=10 --color=yes --cov-report= --maxfail=10 $PYTEST_EXTRA_ARGS || true
+pytest --timeout=10 --color=yes --cov-report= --maxfail=10 $PYTEST_EXTRA_ARGS
 
 popd 2>&1 >/dev/null
