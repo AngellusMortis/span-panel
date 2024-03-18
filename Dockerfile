@@ -32,14 +32,14 @@ RUN --mount=type=cache,mode=0755,id=pip-$TARGETPLATFORM,target=/root/.cache \
 
 FROM base as prod
 
-ARG PYUFP_VERSION
+ARG PYSPAN_VERSION
 
 COPY --from=builder /usr/local/bin/ /usr/local/bin/
 COPY --from=builder /usr/local/lib/python3.12/ /usr/local/lib/python3.12/
-RUN --mount=source=.,target=/tmp/span-api,type=bind,readwrite \
+RUN --mount=source=.,target=/tmp/span-panel,type=bind,readwrite \
     --mount=type=cache,mode=0755,id=pip-$TARGETPLATFORM,target=/root/.cache \
-    SETUPTOOLS_SCM_PRETEND_VERSION=${PYUFP_VERSION} pip install --root-user-action=ignore -U "/tmp/span-api" \
-    && cp /tmp/span-api/.docker/entrypoint.sh /usr/local/bin/entrypoint \
+    SETUPTOOLS_SCM_PRETEND_VERSION=${PYSPAN_VERSION} uv pip install --system -U "span-panel @ /tmp/span-panel" \
+    && cp /tmp/span-panel/.docker/entrypoint.sh /usr/local/bin/entrypoint \
     && chmod +x /usr/local/bin/entrypoint \
     && mkdir /data \
     && chown app:app /data
@@ -80,4 +80,4 @@ RUN --mount=type=cache,mode=0755,id=apt-$TARGETPLATFORM,target=/var/lib/apt/list
 ENV PYTHONPATH /workspaces/span-panel/
 ENV PATH $PATH:/workspaces/span-panel/.bin
 USER app
-WORKDIR /workspaces/span-api/
+WORKDIR /workspaces/span-panel/
