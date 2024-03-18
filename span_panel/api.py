@@ -210,7 +210,7 @@ class SpanClient:
             d.AuthOut,
             "auth/register",
             method="post",
-            json=data.dict(),
+            json=data.dict(by_alias=True),
         )
 
     async def get_storage_nice_to_have_threshold(self) -> d.NiceToHaveThreshold:
@@ -237,7 +237,7 @@ class SpanClient:
             d.NiceToHaveThreshold,
             "storage/nice-to-have-thresh",
             method="post",
-            json=data.dict(),
+            json=data.dict(by_alias=True),
         )
 
     async def get_storage_level(self) -> d.BatteryStorage:
@@ -262,6 +262,54 @@ class SpanClient:
         return await self.api_response_klass(
             d.Circuit,
             f"circuits/{circuit_id}",
+        )
+
+    async def set_circuit(self, circuit: d.Circuit) -> d.Circuit:
+        """Get specific panel circuit."""
+
+        data = d.BodySetCircuitStateApiV1CircuitsCircuitIdPost(
+            relay_state_in=d.RelayStateIn(relay_state=circuit.relay_state),
+            priority_in=d.PriorityIn(priority=circuit.priority),
+            # returns error not yet implemented
+            # circuit_name_in=d.CircuitNameIn(name=circuit.name), # noqa: ERA001
+            # user_controllable_in=d.BooleanIn(value=circuit.is_user_controllable),  # noqa: ERA001
+            # sheddable_in=d.BooleanIn(value=circuit.is_sheddable),  # noqa: ERA001
+            # never_backup_in=d.BooleanIn(value=circuit.is_never_backup),  # noqa: ERA001
+        )
+
+        return await self.api_response_klass(
+            d.Circuit,
+            f"circuits/{circuit.id}",
+            method="post",
+            json=data.dict(by_alias=True),
+        )
+
+    async def set_circuit_by_values(
+        self,
+        circuit_id: str,
+        *,
+        relay_state: d.RelayState | None = None,
+        priority: d.Priority | None = None,
+    ) -> d.Circuit:
+        """Get specific panel circuit."""
+
+        data = d.BodySetCircuitStateApiV1CircuitsCircuitIdPost(
+            relay_state_in=(
+                d.RelayStateIn(relay_state=relay_state) if relay_state else None
+            ),
+            priority_in=d.PriorityIn(priority=priority) if priority else None,
+            # returns error not yet implemented
+            # circuit_name_in=d.CircuitNameIn(name=circuit.name), # noqa: ERA001
+            # user_controllable_in=d.BooleanIn(value=circuit.is_user_controllable),  # noqa: ERA001
+            # sheddable_in=d.BooleanIn(value=circuit.is_sheddable),  # noqa: ERA001
+            # never_backup_in=d.BooleanIn(value=circuit.is_never_backup),  # noqa: ERA001
+        )
+
+        return await self.api_response_klass(
+            d.Circuit,
+            f"circuits/{circuit_id}",
+            method="post",
+            json=data.dict(by_alias=True),
         )
 
     async def get_panel_meter(self) -> d.PanelMeter:
@@ -294,6 +342,16 @@ class SpanClient:
         return await self.api_response_klass(
             d.RelayStateOut,
             "panel/grid",
+        )
+
+    async def set_main_relay_state(self, state: d.RelayState) -> d.RelayStateOut:
+        """Set main relay state."""
+
+        return await self.api_response_klass(
+            d.RelayStateOut,
+            "panel/grid",
+            method="post",
+            json=d.RelayStateIn(relay_state=state).dict(by_alias=True),
         )
 
     async def get_panel(self) -> d.PanelState:
