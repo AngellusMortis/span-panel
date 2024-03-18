@@ -1,0 +1,5 @@
+#!/bin/bash
+
+rm span_panel/client -rf
+
+openapi-generator-cli generate -g python-pydantic-v1 --additional-properties=library=asyncio,generateSourceCodeOnly=true,packageName=span_panel.client  -o . -i openapi.json

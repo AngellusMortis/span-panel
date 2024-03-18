@@ -1,0 +1,37 @@
+#!/bin/bash
+
+set -o errexit
+set -o pipefail
+set -o nounset
+
+BASE_DIR=$( realpath $( dirname "${BASH_SOURCE[0]}" )/../ )
+source "$BASE_DIR/.bin/lib/common.sh"
+setRoot
+
+which uv 2>&1 >> /dev/null && rc=$? || rc=$?
+if [[ rc -eq 1 ]]; then
+    echo -e '\e[1;31mThe python pacakge `uv` is required to update requirements.'
+    exit 1
+fi
+
+IN_DEVCONTAINER=$([[ -f /.dockerenv && -d /workspaces/span_panel ]] && echo "true" || echo "false")
+if [[ $IN_DEVCONTAINER == "true" ]]; then
+    echo "Inside of devcontainer"
+fi
+
+pushd "$ROOT_PATH" 2>&1 >/dev/null
+
+if [[ $IN_DEVCONTAINER == "true" ]]; then
+    sudo rm -rf /workspaces/span_panel/span_panel.egg-info
+fi
+
+# echo "Updating requirements.txt..."
+# uv pip compile -v --upgrade --output-file=requirements.txt pyproject.toml
+# echo "Updating dev-requirements.txt..."
+# uv pip compile -v -c requirements.txt --upgrade --output-file=dev-requirements.txt pyproject.toml
+
+# if [[ $IN_DEVCONTAINER == "true" ]]; then
+#     echo "Upgrading dev container environment..."
+#     sudo uv pip install --system -r requirements.txt -r dev-requirements.txt
+# fi
+popd 2>&1 >/dev/null
