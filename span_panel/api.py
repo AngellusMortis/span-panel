@@ -195,11 +195,11 @@ class SpanClient:
         """Generate JWT Token for auth.
 
         You must also provide either a one-time password, a dashboard password or
-        do a door proximity bypass. It is currently unknown how to get the OTP or
+        do a proximity bypass. It is currently unknown how to get the OTP or
         the dashboard password and they may be limited to only SPAN and/or
         installers.
 
-        To initate a door proximity bypass, open and close the door on your panel
+        To initate a proximity bypass, open and close the door on your panel
         3 times. The lights inside of the panel should start flashing. The bypass
         will remain active for 15 minutes. Once it is active, you can generate an
         auth token to use.
