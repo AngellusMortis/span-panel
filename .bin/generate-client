@@ -22,6 +22,9 @@ sed -i 's/def setUp/async def asyncSetUp/' $testDefaultApi
 # replace json with orjson
 find ./span_panel/client -name "*.py" | xargs sed -i 's/import json/import orjson as json/g'
 
+# replace pydantic v1 with v2 slim support
+find ./span_panel/client -name "*.py" | xargs sed -Ei 's/^from pydantic import ([^(]*)$/try:\n    from pydantic.v1 import \1\nexcept ImportError:\n    from pydantic import \1  # type: ignore[assignment]/g'
+
 format-code
 
 popd 2>&1 >/dev/null

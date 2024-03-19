@@ -18,7 +18,11 @@ import pprint
 import re  # noqa: F401
 
 import orjson as json
-from pydantic import BaseModel, Field, StrictBool, StrictInt, StrictStr
+
+try:
+    from pydantic.v1 import BaseModel, Field, StrictBool, StrictInt, StrictStr
+except ImportError:
+    from pydantic import BaseModel, Field, StrictBool, StrictInt, StrictStr  # type: ignore[assignment]
 
 from span_panel.client.models.door_state import DoorState
 

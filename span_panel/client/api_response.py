@@ -4,7 +4,10 @@ from __future__ import annotations
 
 from typing import Any, Dict, Optional
 
-from pydantic import Field, StrictInt, StrictStr
+try:
+    from pydantic.v1 import Field, StrictInt, StrictStr
+except ImportError:
+    from pydantic import Field, StrictInt, StrictStr  # type: ignore[assignment]
 
 
 class ApiResponse:

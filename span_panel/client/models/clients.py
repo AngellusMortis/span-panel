@@ -19,7 +19,11 @@ import re  # noqa: F401
 from typing import Dict
 
 import orjson as json
-from pydantic import BaseModel, Field
+
+try:
+    from pydantic.v1 import BaseModel, Field
+except ImportError:
+    from pydantic import BaseModel, Field  # type: ignore[assignment]
 
 from span_panel.client.models.client import Client
 

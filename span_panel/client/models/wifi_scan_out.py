@@ -19,7 +19,11 @@ import re  # noqa: F401
 from typing import List
 
 import orjson as json
-from pydantic import BaseModel, Field, conlist
+
+try:
+    from pydantic.v1 import BaseModel, Field, conlist
+except ImportError:
+    from pydantic import BaseModel, Field, conlist  # type: ignore[assignment]
 
 from span_panel.client.models.wifi_access_point import WifiAccessPoint
 

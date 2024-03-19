@@ -16,10 +16,21 @@ from __future__ import annotations
 
 import io
 import re  # noqa: F401
-from typing import Any, Awaitable, Optional, Union, overload
 import warnings
 
-from pydantic import StrictStr, ValidationError, validate_arguments
+try:
+    from pydantic.v1 import ValidationError, validate_arguments
+except ImportError:
+    from pydantic import validate_arguments, ValidationError  # type: ignore[assignment]
+
+from typing import Awaitable, Optional, Union, overload
+
+try:
+    from pydantic.v1 import StrictStr
+except ImportError:
+    from pydantic import StrictStr  # type: ignore[assignment]
+
+from typing import Any, Optional
 
 from span_panel.client.api_client import ApiClient
 from span_panel.client.api_response import ApiResponse

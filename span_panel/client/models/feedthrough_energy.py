@@ -19,7 +19,16 @@ import re  # noqa: F401
 from typing import Union
 
 import orjson as json
-from pydantic import BaseModel, Field, StrictFloat, StrictInt
+
+try:
+    from pydantic.v1 import BaseModel, Field, StrictFloat, StrictInt
+except ImportError:
+    from pydantic import (  # type: ignore[assignment]
+        BaseModel,
+        Field,
+        StrictFloat,
+        StrictInt,
+    )
 
 
 class FeedthroughEnergy(BaseModel):

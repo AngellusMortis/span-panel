@@ -18,7 +18,11 @@ import pprint
 import re  # noqa: F401
 
 import orjson as json
-from pydantic import BaseModel, Field, StrictBool
+
+try:
+    from pydantic.v1 import BaseModel, Field, StrictBool
+except ImportError:
+    from pydantic import BaseModel, Field, StrictBool  # type: ignore[assignment]
 
 
 class NetworkStatus(BaseModel):

@@ -18,7 +18,11 @@ import pprint
 import re  # noqa: F401
 
 import orjson as json
-from pydantic import BaseModel, Field
+
+try:
+    from pydantic.v1 import BaseModel, Field
+except ImportError:
+    from pydantic import BaseModel, Field  # type: ignore[assignment]
 
 from span_panel.client.models.network_status import NetworkStatus
 from span_panel.client.models.software_status import SoftwareStatus

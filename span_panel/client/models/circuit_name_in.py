@@ -18,7 +18,11 @@ import pprint
 import re  # noqa: F401
 
 import orjson as json
-from pydantic import BaseModel, Field, StrictStr
+
+try:
+    from pydantic.v1 import BaseModel, Field, StrictStr
+except ImportError:
+    from pydantic import BaseModel, Field, StrictStr  # type: ignore[assignment]
 
 
 class CircuitNameIn(BaseModel):

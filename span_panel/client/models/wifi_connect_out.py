@@ -18,7 +18,17 @@ import pprint
 import re  # noqa: F401
 
 import orjson as json
-from pydantic import BaseModel, Field, StrictBool, StrictInt, StrictStr
+
+try:
+    from pydantic.v1 import BaseModel, Field, StrictBool, StrictInt, StrictStr
+except ImportError:
+    from pydantic import (  # type: ignore[assignment]
+        BaseModel,
+        Field,
+        StrictBool,
+        StrictInt,
+        StrictStr,
+    )
 
 
 class WifiConnectOut(BaseModel):

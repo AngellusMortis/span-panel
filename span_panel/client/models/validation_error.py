@@ -19,7 +19,16 @@ import re  # noqa: F401
 from typing import List
 
 import orjson as json
-from pydantic import BaseModel, Field, StrictStr, conlist
+
+try:
+    from pydantic.v1 import BaseModel, Field, StrictStr, conlist
+except ImportError:
+    from pydantic import (  # type: ignore[assignment]
+        BaseModel,
+        Field,
+        StrictStr,
+        conlist,
+    )
 
 
 class ValidationError(BaseModel):

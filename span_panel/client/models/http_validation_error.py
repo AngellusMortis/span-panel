@@ -19,7 +19,11 @@ import re  # noqa: F401
 from typing import List, Optional
 
 import orjson as json
-from pydantic import BaseModel, conlist
+
+try:
+    from pydantic.v1 import BaseModel, conlist
+except ImportError:
+    from pydantic import BaseModel, conlist  # type: ignore[assignment]
 
 from span_panel.client.models.validation_error import ValidationError
 

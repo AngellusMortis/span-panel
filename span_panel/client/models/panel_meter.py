@@ -18,7 +18,11 @@ import pprint
 import re  # noqa: F401
 
 import orjson as json
-from pydantic import BaseModel, Field
+
+try:
+    from pydantic.v1 import BaseModel, Field
+except ImportError:
+    from pydantic import BaseModel, Field  # type: ignore[assignment]
 
 from span_panel.client.models.feedthrough_energy import FeedthroughEnergy
 from span_panel.client.models.main_meter_energy import MainMeterEnergy

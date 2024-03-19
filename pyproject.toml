@@ -35,7 +35,7 @@ dependencies = [
     "aenum",
     "aiohttp",
     "orjson",
-    "pydantic!=1.9.1,<2.0",
+    "pydantic!=1.9.1",
     "python-dateutil",
     "rich",
     "typer",

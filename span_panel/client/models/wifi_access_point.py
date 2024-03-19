@@ -19,7 +19,17 @@ import re  # noqa: F401
 from typing import Optional
 
 import orjson as json
-from pydantic import BaseModel, Field, StrictBool, StrictInt, StrictStr
+
+try:
+    from pydantic.v1 import BaseModel, Field, StrictBool, StrictInt, StrictStr
+except ImportError:
+    from pydantic import (  # type: ignore[assignment]
+        BaseModel,
+        Field,
+        StrictBool,
+        StrictInt,
+        StrictStr,
+    )
 
 
 class WifiAccessPoint(BaseModel):

@@ -19,7 +19,11 @@ import re  # noqa: F401
 from typing import List, Union
 
 import orjson as json
-from pydantic import BaseModel, Field, StrictFloat, StrictInt, StrictStr, conlist
+
+try:
+    from pydantic.v1 import BaseModel, Field, StrictFloat, StrictInt, StrictStr, conlist
+except ImportError:
+    from pydantic import BaseModel, Field, StrictFloat, StrictInt, StrictStr, conlist  # type: ignore[assignment]
 
 from span_panel.client.models.branch import Branch
 from span_panel.client.models.feedthrough_energy import FeedthroughEnergy

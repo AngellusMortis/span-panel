@@ -19,7 +19,11 @@ import re  # noqa: F401
 from typing import Union
 
 import orjson as json
-from pydantic import BaseModel, Field, StrictBool, StrictFloat, StrictInt
+
+try:
+    from pydantic.v1 import BaseModel, Field, StrictBool, StrictFloat, StrictInt
+except ImportError:
+    from pydantic import BaseModel, Field, StrictBool, StrictFloat, StrictInt  # type: ignore[assignment]
 
 from span_panel.client.models.relay_state import RelayState
 

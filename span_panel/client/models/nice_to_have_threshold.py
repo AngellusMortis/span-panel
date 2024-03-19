@@ -19,7 +19,11 @@ import re  # noqa: F401
 from typing import Optional
 
 import orjson as json
-from pydantic import BaseModel
+
+try:
+    from pydantic.v1 import BaseModel
+except ImportError:
+    from pydantic import BaseModel  # type: ignore[assignment]
 
 from span_panel.client.models.state_of_energy import StateOfEnergy
 

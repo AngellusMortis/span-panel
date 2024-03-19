@@ -19,7 +19,11 @@ import re  # noqa: F401
 from typing import Optional
 
 import orjson as json
-from pydantic import BaseModel, StrictInt
+
+try:
+    from pydantic.v1 import BaseModel, StrictInt
+except ImportError:
+    from pydantic import BaseModel, StrictInt  # type: ignore[assignment]
 
 
 class StateOfEnergy(BaseModel):

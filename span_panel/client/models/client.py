@@ -19,7 +19,11 @@ import re  # noqa: F401
 from typing import Optional
 
 import orjson as json
-from pydantic import BaseModel, Field, StrictInt, StrictStr
+
+try:
+    from pydantic.v1 import BaseModel, Field, StrictInt, StrictStr
+except ImportError:
+    from pydantic import BaseModel, Field, StrictInt, StrictStr  # type: ignore[assignment]
 
 from span_panel.client.models.allowed_endpoint_groups import AllowedEndpointGroups
 

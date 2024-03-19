@@ -6,7 +6,12 @@ from typing import Any, TypeVar, cast
 import aiohttp
 from aiohttp import client_exceptions
 import orjson
-from pydantic import BaseModel
+
+try:
+    from pydantic.v1 import BaseModel
+except ImportError:
+    from pydantic import BaseModel  # type: ignore[assignment]
+
 from yarl import URL
 
 from span_panel.client import models as d
@@ -211,7 +216,7 @@ class SpanClient:
         auth token to use.
         """
 
-        data = d.AuthIn(name=name, description=description)
+        data = d.AuthIn(name=name, description=description)  # type: ignore[call-arg]
         return await self.api_response_klass(
             d.AuthOut,
             "auth/register",
@@ -273,9 +278,9 @@ class SpanClient:
     async def set_circuit(self, circuit: d.Circuit) -> d.Circuit:
         """Get specific panel circuit."""
 
-        data = d.BodySetCircuitStateApiV1CircuitsCircuitIdPost(
-            relay_state_in=d.RelayStateIn(relay_state=circuit.relay_state),
-            priority_in=d.PriorityIn(priority=circuit.priority),
+        data = d.BodySetCircuitStateApiV1CircuitsCircuitIdPost(  # type: ignore[call-arg]
+            relayStateIn=d.RelayStateIn(relayState=circuit.relay_state),
+            priorityIn=d.PriorityIn(priority=circuit.priority),
             # returns error not yet implemented
             # circuit_name_in=d.CircuitNameIn(name=circuit.name), # noqa: ERA001
             # user_controllable_in=d.BooleanIn(value=circuit.is_user_controllable),  # noqa: ERA001
@@ -299,11 +304,11 @@ class SpanClient:
     ) -> d.Circuit:
         """Get specific panel circuit."""
 
-        data = d.BodySetCircuitStateApiV1CircuitsCircuitIdPost(
-            relay_state_in=(
-                d.RelayStateIn(relay_state=relay_state) if relay_state else None
+        data = d.BodySetCircuitStateApiV1CircuitsCircuitIdPost(  # type: ignore[call-arg]
+            relayStateIn=(
+                d.RelayStateIn(relayState=relay_state) if relay_state else None
             ),
-            priority_in=d.PriorityIn(priority=priority) if priority else None,
+            priorityIn=d.PriorityIn(priority=priority) if priority else None,
             # returns error not yet implemented
             # circuit_name_in=d.CircuitNameIn(name=circuit.name), # noqa: ERA001
             # user_controllable_in=d.BooleanIn(value=circuit.is_user_controllable),  # noqa: ERA001
@@ -357,7 +362,7 @@ class SpanClient:
             d.RelayStateOut,
             "panel/grid",
             method="post",
-            json=d.RelayStateIn(relay_state=state).dict(by_alias=True),
+            json=d.RelayStateIn(relayState=state).dict(by_alias=True),
         )
 
     async def get_panel(self) -> d.PanelState:
