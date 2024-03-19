@@ -28,7 +28,7 @@ nav:
   - Home: "index.md"
   - Development: "dev.md"
   - Command Line: "cli.md"
-  - API Reference: "api.md"
+  # - API Reference: "api.md"
   - Changelog: "https://github.com/AngellusMortis/span-panel/releases"
 
 plugins:
