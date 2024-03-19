@@ -37,6 +37,7 @@ dependencies = [
     "orjson",
     "pydantic!=1.9.1,<2.0",
     "python-dateutil",
+    "rich",
     "typer",
     "urllib3 >= 1.25.3",
 ]

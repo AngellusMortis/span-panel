@@ -14,13 +14,20 @@ frozenlist==1.4.1
     #   aiosignal
 idna==3.6
     # via yarl
+markdown-it-py==3.0.0
+    # via rich
+mdurl==0.1.2
+    # via markdown-it-py
 multidict==6.0.5
     # via
     #   aiohttp
     #   yarl
 orjson==3.9.15
 pydantic==1.10.14
+pygments==2.17.2
+    # via rich
 python-dateutil==2.9.0.post0
+rich==13.7.1
 six==1.16.0
     # via python-dateutil
 typer==0.9.0
