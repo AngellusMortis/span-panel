@@ -43,6 +43,12 @@ class SpanClient:
                 "Authorization": f"Bearer {self._token}",
             }
 
+    @property
+    def has_auth(self) -> bool:
+        """Return if there is an auth token."""
+
+        return self._token is not None
+
     async def get_session(self) -> aiohttp.ClientSession:
         """Gets or creates current client session"""
 
